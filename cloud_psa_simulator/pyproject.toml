@@ -1,0 +1,24 @@
+[project]
+name = "cloud_psa_simulator"
+version = "0.1.0"
+description = "cloud-psa-simulator using crewAI"
+authors = [{ name = "Artur Lemes Moretti", email = "turlemes@gmail.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[google-genai,tools]==1.14.4",
+]
+
+[project.scripts]
+cloud_psa_simulator = "cloud_psa_simulator.main:run"
+run_crew = "cloud_psa_simulator.main:run"
+train = "cloud_psa_simulator.main:train"
+replay = "cloud_psa_simulator.main:replay"
+test = "cloud_psa_simulator.main:test"
+run_with_trigger = "cloud_psa_simulator.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

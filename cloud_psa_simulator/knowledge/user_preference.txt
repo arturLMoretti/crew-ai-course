@@ -1,0 +1,4 @@
+User name is Artur Lemes Moretti.
+User is an AI Engineer.
+User is interested in AI Agents, Data Science and Machine Learning.
+User is based in Brazil.
