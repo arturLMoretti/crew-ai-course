@@ -13,6 +13,7 @@ research_task:
     - Key findings
     - Relevance
   agent: researcher
+  output_file: "outputs/research_task.md"
 
 reporting_task:
   description: >
@@ -22,3 +23,128 @@ reporting_task:
     A fully fledged report with the main topics, each with a full section of information.
     Formatted as markdown without '```'
   agent: reporting_analyst
+  context:
+    - research_task
+  output_file: "outputs/reporting_task.md"
+
+data_analysis_task:
+  description: >
+    Analyze the data you have and identify any trends, patterns, or insights.
+    Make sure to use any relevant data analysis techniques to uncover insights.
+  expected_output: >
+    A detailed analysis of the data, including any trends, patterns, or insights you have uncovered
+    Formatted as markdown without '```'
+  agent: data_scientist
+  context:
+    - research_task
+    - reporting_task
+  output_file: "outputs/data_analysis_task.md"
+
+simulation_task:
+  description: >
+    Develop and optimize a pressure swing adsorption modeling and simulation model.
+    Make sure to use any relevant techniques to develop and optimize the model.
+  expected_output: >
+    A detailed description of the model you have developed, including any optimizations you have made
+    Formatted as markdown without '```'
+  agent: simulation_engineer
+  context:
+    - research_task
+    - reporting_task
+    - data_analysis_task
+  output_file: "outputs/simulation_task.md"
+
+process_optimization_task:
+  description: >
+    Analyze the current pressure swing adsorption process and identify any areas for optimization.
+    Make sure to use any relevant techniques to identify areas for optimization.
+  expected_output: >
+    A detailed analysis of the current process, including any areas for optimization you have identified
+    Formatted as markdown without '```'
+  agent: process_engineer
+  context:
+    - research_task
+    - reporting_task
+    - data_analysis_task
+    - simulation_task
+  output_file: "outputs/process_optimization_task.md"
+
+project_management_task:
+  description: >
+    Manage the pressure swing adsorption modeling and simulation project, ensuring that all tasks are completed on time and to a high standard.
+    Make sure to delegate tasks effectively and ensure that the project is completed on time and to a high standard.
+  expected_output: >
+    A detailed project management plan, including a timeline, task delegation, and any other relevant information
+    Formatted as markdown without '```'
+  agent: manager
+  output_file: "outputs/project_management_task.md"
+
+implementation_task:
+  description: >
+    Implement the pressure swing adsorption model in Python following the research findings and specifications.
+    Create a well-structured Python project with:
+    - Core PSA model classes and functions
+    - Configuration system for different PSA scenarios
+    - Example usage scripts
+    - Proper error handling and validation
+    IMPORTANT: Read outputs/reporting_task.md, outputs/simulation_task.md, and outputs/process_optimization_task.md to understand the model requirements. Create Python code files in {base_dir}/src/cloud_psa_simulator/ using FileWriterTool, not markdown descriptions. The base directory is defined in config: code_output.base_dir (default: ~/Desktop/cloud_psa_simulator_files)
+  expected_output: >
+    Complete Python implementation with:
+    - {base_dir}/src/cloud_psa_simulator/ directory with all modules
+    - pyproject.toml with proper dependencies
+    - Working PSA model that can be imported and used
+  agent: python_developer
+  context:
+    - research_task
+    - reporting_task
+    - data_analysis_task
+    - simulation_task
+    - process_optimization_task
+  output_file: "outputs/implementation_task.md"
+
+documentation_task:
+  description: >
+    Create comprehensive documentation for the PSA simulator project including:
+    - README.md with installation instructions, quick start guide, and project overview
+    - Docstrings for all public classes and functions
+    - Example scripts with comments
+    - Configuration guide for different PSA scenarios
+    IMPORTANT: Read outputs/implementation_task.md and actual code in src/cloud_psa_simulator/ to create accurate documentation. Create actual documentation files (README.md, etc.), not markdown task outputs.
+  expected_output: >
+    Complete documentation including:
+    - README.md with badges, installation, usage examples
+    - Inline docstrings for all modules
+    - Example scripts in examples/ directory
+  agent: documentation_writer
+  context:
+    - research_task
+    - reporting_task
+    - data_analysis_task
+    - simulation_task
+    - process_optimization_task
+    - implementation_task
+  output_file: "outputs/documentation_task.md"
+
+validation_task:
+  description: >
+    Create comprehensive tests and validation for the PSA model including:
+    - Unit tests for core PSA model functions
+    - Integration tests for complete PSA cycles
+    - Validation tests comparing results against reference data
+    - Benchmark tests for performance validation
+    IMPORTANT: Read the actual code in src/cloud_psa_simulator/ to understand implementation details. Create actual test files in tests/ directory, not just markdown descriptions.
+  expected_output: >
+    Test suite with:
+    - tests/ directory with test files
+    - Test coverage for all public functions
+    - Validation tests with known expected outputs
+    - pytest configuration
+  agent: test_engineer
+  context:
+    - research_task
+    - reporting_task
+    - data_analysis_task
+    - simulation_task
+    - process_optimization_task
+    - implementation_task
+  output_file: "outputs/validation_task.md"

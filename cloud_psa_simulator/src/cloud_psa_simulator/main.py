@@ -4,7 +4,7 @@ import warnings
 
 from datetime import datetime
 
-from crew import CloudPsaSimulator
+from cloud_psa_simulator.crew import CloudPsaSimulator
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -17,9 +17,19 @@ def run():
     """
     Run the crew.
     """
+    import yaml
+    import os
+
+    config_path = os.path.join(os.path.dirname(__file__), 'config/agents.yaml')
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
+
+    code_output = config.get('code_output', {})
+    base_dir = os.path.expanduser(code_output.get('base_dir', '~/Desktop/cloud_psa_simulator_files'))
+
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'current_year': str(datetime.now().year),
+        'base_dir': base_dir
     }
 
     try:
@@ -33,7 +43,6 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI LLMs",
         'current_year': str(datetime.now().year)
     }
     try:
@@ -57,7 +66,6 @@ def test():
     Test the crew execution and returns the results.
     """
     inputs = {
-        "topic": "AI LLMs",
         "current_year": str(datetime.now().year)
     }
 
@@ -83,8 +91,7 @@ def run_with_trigger():
 
     inputs = {
         "crewai_trigger_payload": trigger_payload,
-        "topic": "",
-        "current_year": ""
+        "current_year": str(datetime.now().year)
     }
 
     try:
